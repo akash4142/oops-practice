@@ -1,0 +1,95 @@
+#include <iostream>
+using std::string;
+
+
+class abstractEmployee {
+	virtual void AskForPromotion()= 0;
+};
+class Employee:abstractEmployee {
+private:
+	string name;
+	string company;
+	int age;
+public:
+	void setName(string Name) {
+		name = Name;
+	}
+	string getName() {
+		return name;
+	}
+	void setCompany(string Company) {
+		company = Company;
+	}
+	string getCompany() {
+		return company;
+	}
+	void setage(int Age) {
+		age = Age;
+	}
+	int getage() {
+		return age;
+	}
+
+	void introduceyourself() {
+		std::cout << "Name = " << name << std::endl;
+		std::cout << "company = " << company << std::endl;
+		std::cout << "Age = " << age << std::endl;
+	}
+	Employee(string Name, string Company, int Age) {
+		name = Name;
+		company = Company;
+		age = Age;
+	}
+	void AskForPromotion() {
+		if (age > 30)
+			std::cout << name << " got promoted" << std::endl;
+		else
+			std::cout << name << " not promoted" << std::endl;
+	}
+	virtual void Work() {
+		std::cout << name << " is checking email ,task backlog, performing tasks "<<std::endl;
+	}
+};
+class Developer :public Employee {
+public:
+	string favprogramminglang;
+	Developer(string Name, string Company, int Age, string lang) : Employee(Name,Company,Age) {
+		favprogramminglang = lang;
+		};
+	void FixBug() {
+		std::cout << getName() << " fixed bug using " << favprogramminglang << std::endl;
+	}
+	void Work() {
+		std::cout << getName() << " is writing the codes in  " << favprogramminglang << std::endl;
+	}
+};
+
+class Teacher :public Employee {
+public:
+	string Subject;
+	void Preparelesson() {
+		std::cout << getName() << " is preparing " << Subject << "lesson" << std::endl;
+	}
+	Teacher(string Name, string Company, int Age, string subject) 
+		:Employee(Name,Company,Age)
+	{
+
+	}
+	void Work() {
+		std::cout << getName() << " is teaching " << Subject << std::endl;
+	}
+};
+int main()
+{
+	
+	Developer d=Developer("akash","google",19,"C++");
+	Teacher t=Teacher("Jack","cool school",12,"maths");
+	
+	d.Work();
+	t.Work();
+
+	Employee* e1 = &d;
+	Employee* e2 = &t;
+	e1->Work();
+	e2->Work();
+}
